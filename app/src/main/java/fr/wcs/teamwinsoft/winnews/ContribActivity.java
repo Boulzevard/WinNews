@@ -158,7 +158,7 @@ public class ContribActivity extends AppCompatActivity {
                 else {
                     getVideoUrl = videoUri.getPath();
                     Random r = new Random();
-                    String numVideo = "video" + String.valueOf(r.nextInt(57) + 52);
+                    String numVideo = "video" + String.valueOf(r.nextInt(20) + 7);
 
                     if (!getVideoUrl.equals("") && getVideoUrl != null) {
                         StorageReference ref = FirebaseStorage.getInstance().getReference().child(numVideo);
