@@ -17,6 +17,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +57,7 @@ public class ContribActivity extends AppCompatActivity {
     private String name = "";
     private String firstname = "";
     private String icon = "";
+    private String tag = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +142,41 @@ public class ContribActivity extends AppCompatActivity {
             }
         });
 */
+
+        spinnerAddTags.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        Toast.makeText(ContribActivity.this, "Merci de sélectionner un tag", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        tag = "Ecologie";
+                        break;
+                    case 2:
+                        tag = "Social";
+                        break;
+                    case 3:
+                        tag = "Economie";
+                        break;
+                    case 4:
+                        tag = "Technologie";
+                        break;
+                    case 5:
+                        tag = "Santé";
+                        break;
+                    case 6:
+                        tag = "Evénement";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         btnValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,7 +204,7 @@ public class ContribActivity extends AppCompatActivity {
                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                 Uri downloadUri = taskSnapshot.getDownloadUrl();
                                 String video = downloadUri.toString();
-                                VideoModel videoModel = new VideoModel(title, link, video, "un tag", mLatitude, mLongitude, name, firstname);
+                                VideoModel videoModel = new VideoModel(title, link, video, tag, mLatitude, mLongitude, name, firstname);
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Videos");
                                 ref.push().setValue(videoModel);
                             }
