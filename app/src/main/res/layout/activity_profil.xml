@@ -18,7 +18,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="80dp"
-        android:text="TextView"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_main" />
@@ -30,7 +29,6 @@
         android:layout_marginLeft="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="84dp"
-        android:text="TextView"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_profil_ancre_firstname" />
@@ -42,7 +40,6 @@
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="92dp"
-        android:text="TextView"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_profil_ancre_lastname" />
@@ -56,7 +53,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:hint="Prénom"
+        android:hint="@string/firstname"
         android:inputType="textPersonName"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/tv_profil_ancre_firstname"
@@ -72,7 +69,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:hint="Nom"
+        android:hint="@string/name"
         android:inputType="textPersonName"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/tv_profil_ancre_lastname"
@@ -88,7 +85,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
-        android:hint="Employeur Actuel"
+        android:hint="@string/employer"
         android:inputType="textPersonName"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/tv_profil_ancre_societe"
@@ -104,7 +101,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="Prénom"
+        android:text="@string/firstname"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_profil_ancre_firstname"
         app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +116,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="Nom"
+        android:text="@string/name"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_profil_ancre_lastname"
         app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +131,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:text="Employeur Actuel"
+        android:text="@string/employer"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_profil_ancre_societe"
         app:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +147,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="68dp"
-        android:text="Déconnexion"
+        android:text="@string/log_out"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -261,7 +258,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -299,7 +295,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="8dp"
-                android:text="WinNews"
+                android:text="@string/app_name"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="@+id/container_container_signature"
                 app:layout_constraintEnd_toStartOf="@+id/tv_signature_contrib_by"
@@ -312,7 +308,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:text="by"
+                android:text="@string/by"
                 android:textSize="13sp"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_signature_contrib"
                 app:layout_constraintEnd_toStartOf="@+id/iv_signature_contrib_winstate" />
@@ -327,9 +323,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
-
         </android.support.constraint.ConstraintLayout>
-
     </android.support.constraint.ConstraintLayout>
-
 </android.support.constraint.ConstraintLayout>

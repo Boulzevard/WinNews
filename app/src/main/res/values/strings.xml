@@ -21,6 +21,21 @@
     <string name="firstname_name">%s %s</string>
     <string name="no_specified">Non Renseigné</string>
     <string name="enter_name_firstname">Veuillez entrer un nom et un prénom</string>
+    <string name="logo">Souriez ! Il y a des WinNews</string>
+    <string name="new_video">Ajout vidéo</string>
+    <string name="video_title">Titre de la vidéo</string>
+    <string name="article_link">Lien de l\'article</string>
+    <string name="by">by</string>
+    <string name="filter">Filtres</string>
+    <string name="_0_km">0 km</string>
+    <string name="details">Détails</string>
+    <string name="firstname">Prénom</string>
+    <string name="name">Nom</string>
+    <string name="employer">Employeur Actuel</string>
+    <string name="log_out">Déconnexion</string>
+    <string name="user">WN</string>
+    <string name="play">Lecture</string>
+    <string name="contributor">Contribution</string>
 
     <string-array name="spinner_add_tags">
         <item>Choisissez un tag</item>

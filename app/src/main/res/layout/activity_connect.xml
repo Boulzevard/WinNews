@@ -25,6 +25,21 @@
         app:srcCompat="@drawable/winnews_logo_blue" />
 
     <TextView
+        android:id="@+id/tv_connect_title"
+        style="@style/textbasique"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/app_name"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
+
+    <TextView
         android:id="@+id/tv_connect"
         style="@style/textbasique"
         android:layout_width="wrap_content"
@@ -34,25 +49,10 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Souriez !   Il y a des WinNews"
+        android:text="@string/logo"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_connect_title" />
-
-    <TextView
-        android:id="@+id/tv_connect_title"
-        style="@style/textbasique"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:text="WinNews"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
 </android.support.constraint.ConstraintLayout>

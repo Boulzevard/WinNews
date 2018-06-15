@@ -2,7 +2,7 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="15sp"
-    android:padding="5dp"
     android:fontFamily="@font/montserrat_bold"
-    android:textColor="@color/bleu" />
+    android:padding="5dp"
+    android:textColor="@color/bleu"
+    android:textSize="15sp" />

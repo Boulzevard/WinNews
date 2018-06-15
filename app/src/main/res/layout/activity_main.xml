@@ -48,7 +48,7 @@
                     android:layout_marginRight="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Filtres"
+                    android:text="@string/filter"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -74,7 +74,7 @@
                     style="@style/textbasique"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0 km"
+                    android:text="@string/_0_km"
                     android:textSize="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -115,8 +115,6 @@
                         android:src="@drawable/check_bleu" />
 
                 </LinearLayout>
-
-
             </android.support.constraint.ConstraintLayout>
 
             <android.support.constraint.ConstraintLayout
@@ -151,7 +149,6 @@
                     android:layout_width="230dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Le titre"
                     app:layout_constraintStart_toStartOf="@+id/video_en_cours"
                     app:layout_constraintTop_toBottomOf="@+id/video_en_cours" />
 
@@ -164,12 +161,11 @@
                     android:layout_marginRight="32dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/button"
-                    android:text="Détails"
+                    android:text="@string/details"
                     android:textColor="@color/bleu"
                     android:textSize="10sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/video_en_cours" />
-
 
             </android.support.constraint.ConstraintLayout>
 
@@ -192,7 +188,6 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:autoLink="web"
-                    android:text="lien"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/container_detail" />
 
@@ -203,10 +198,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="auteur"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_detail_link" />
-
 
             </android.support.constraint.ConstraintLayout>
 
@@ -225,7 +218,5 @@
                 tools:listItem="@layout/item_video" />
 
         </android.support.constraint.ConstraintLayout>
-
     </ScrollView>
-
 </android.support.constraint.ConstraintLayout>
