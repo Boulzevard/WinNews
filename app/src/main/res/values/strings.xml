@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">WinNews</string>
+
+    <string-array name="spinner_add_tags">
+        <item>Entrez un tag</item>
+        <item>Ecologie</item>
+        <item>Social</item>
+        <item>Economie</item>
+        <item>Technologie</item>
+        <item>Santé</item>
+        <item>Evénement</item>
+
+    </string-array>
 </resources>
