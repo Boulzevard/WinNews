@@ -34,9 +34,11 @@ public class ConnectActivity extends AppCompatActivity {
 
         ImageView logo = findViewById(R.id.iv_logo);
         TextView slogan = findViewById(R.id.tv_connect);
+        TextView title = findViewById(R.id.tv_connect_title);
 
         fadeIn(logo);
         fadeInText(slogan);
+        fadeInText(title);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         if (auth.getCurrentUser() != null) {
