@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView videoTitle, videoLink, videoAuthor;
 
+    ConstraintLayout containerVideo;
+
     String tag = "";
     int distance = 0;
 
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_add_tags, R.layout.spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_drop_down);
         spinnerAddTags.setAdapter(adapter);
+        containerVideo = findViewById(R.id.container_video);
 
         Button details = findViewById(R.id.bt_main_video_detail);
         final ConstraintLayout containerDetails = findViewById(R.id.container_detail);
@@ -215,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
         listVideos.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), listVideos, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                containerVideo.setVisibility(View.VISIBLE);
                 VideoModel video = videoModels.get(position);
                 videoCours.setVideoPath(video.getVideo());
                 videoCours.start();
