@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +29,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,6 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
     TextView videoTitle, videoLink, videoAuthor;
 
+    String tag = "";
+    int distance = 0;
+
+    LocationManager mLocationManager = null;
+    double mLatitude, mLongitude;
+    private FusedLocationProviderClient mFusedLocationClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
 
         Button details = findViewById(R.id.bt_main_video_detail);
         final ConstraintLayout containerDetails = findViewById(R.id.container_detail);
+        ImageView validTag = findViewById(R.id.iv_filtre_valid);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        initLocation();
+        checkPermission();
 
         details.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 if (i > 500){
                     tvSeekbarKm.setText("+500 km");
                 }
-
+                distance = i;
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) { }
@@ -130,25 +147,70 @@ public class MainActivity extends AppCompatActivity {
         listVideos.setLayoutManager(layoutManager);
         listVideos.setAdapter(videoAdapter);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Videos");
-        ref.addValueEventListener(new ValueEventListener() {
+        spinnerAddTags.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                videoModels.clear();
-                for (DataSnapshot videoSnap: dataSnapshot.getChildren()) {
-                    VideoModel videoModel = videoSnap.getValue(VideoModel.class);
-                    videoModels.add(new VideoModel(videoModel.getTitle(), videoModel.getLink(),
-                            videoModel.getVideo(), videoModel.getTags(), videoModel.getName(),
-                            videoModel.getFirstname()));
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 1:
+                        tag = "Ecologie";
+                        break;
+                    case 2:
+                        tag = "Social";
+                        break;
+                    case 3:
+                        tag = "Economie";
+                        break;
+                    case 4:
+                        tag = "Technologie";
+                        break;
+                    case 5:
+                        tag = "Santé";
+                        break;
+                    case 6:
+                        tag = "Evénement";
+                        break;
                 }
-                videoAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+
+        validTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Videos");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        videoModels.clear();
+                        for (DataSnapshot videoSnap: dataSnapshot.getChildren()) {
+                            VideoModel videoModel = videoSnap.getValue(VideoModel.class);
+                            Location loc = new Location("");
+                            loc.setLatitude(videoModel.getLatitude());
+                            loc.setLongitude(videoModel.getLongitude());
+                            Location myLoc = new Location("");
+                            myLoc.setLatitude(mLatitude);
+                            myLoc.setLongitude(mLongitude);
+                            int test1 = (int) myLoc.distanceTo(loc) / 1000;
+                            if (tag.equals(videoModel.getTags()) && ((int)myLoc.distanceTo(loc) / 1000) < distance) {
+                                videoModels.add(new VideoModel(videoModel.getTitle(), videoModel.getLink(),
+                                        videoModel.getVideo(), videoModel.getTags(), videoModel.getLatitude(),
+                                        videoModel.getLongitude(), videoModel.getName(), videoModel.getFirstname()));
+                            }
+                        }
+                        videoAdapter.notifyDataSetChanged();
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
 
         listVideos.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), listVideos, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -198,7 +260,107 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    @SuppressLint({"MissingPersmission", "MissingPermission"})
+    private void initLocation() {
+        mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
+        mFusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            mLatitude = location.getLatitude();
+                            mLongitude = location.getLongitude();
+                        }
+                    }
+                });
+
+        LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mLatitude = location.getLatitude();
+                mLongitude = location.getLongitude();
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                0, 0, locationListener);
+    }
+
+    public void checkPermission() {
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+            } else {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+                        100);
+            }
+        } else {
+            initLocation();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 100: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    initLocation();
+
+                } else {
+
+                    // l'autorisation a été refusée
+                }
+                return;
+            }
+
+        }
+    }
+
+    private double distance(double lat1, double lng1, double lat2, double lng2) {
+
+        double earthRadius = 6371; // in miles, change to 6371 for kilometer output
+
+        double dLat = Math.toRadians(lat2-lat1);
+        double dLng = Math.toRadians(lng2-lng1);
+
+        double sindLat = Math.sin(dLat / 2);
+        double sindLng = Math.sin(dLng / 2);
+
+        double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+                * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+        double dist = earthRadius * c;
+
+        return dist; // output distance, in MILES
     }
 }
