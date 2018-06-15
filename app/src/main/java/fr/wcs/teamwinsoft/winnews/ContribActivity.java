@@ -36,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -206,14 +207,20 @@ public class ContribActivity extends AppCompatActivity {
                                 VideoModel videoModel = new VideoModel(title, link, video, tag, mLatitude, mLongitude, name, firstname);
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Videos");
                                 ref.push().setValue(videoModel);
+                                Toast.makeText(ContribActivity.this, "Chargemement terminé", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                int progress = (int) ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
+                                Toast.makeText(ContribActivity.this, "Chargement : " + progress + "%", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
 
                     etVideoTitle.getText().clear();
                     etLink.getText().clear();
-
-                    Toast.makeText(ContribActivity.this, "Vidéo ajoutée", Toast.LENGTH_SHORT).show();
                 }
             }
         });
