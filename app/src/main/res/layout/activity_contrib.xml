@@ -117,4 +117,72 @@
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/container_contrib_signature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@color/jaune">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/container_container_signature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_signature_contrib"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/winnews_logo_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/container_container_signature"
+                app:layout_constraintEnd_toStartOf="@+id/tv_signature_contrib" />
+
+            <TextView
+                android:id="@+id/tv_signature_contrib"
+                style="@style/textbasique"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:text="WinNews"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/container_container_signature"
+                app:layout_constraintEnd_toStartOf="@+id/tv_signature_contrib_by"
+                app:layout_constraintTop_toTopOf="@+id/container_container_signature" />
+
+            <TextView
+                android:id="@+id/tv_signature_contrib_by"
+                style="@style/textbasique"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:text="by"
+                android:textSize="13sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_signature_contrib"
+                app:layout_constraintEnd_toStartOf="@+id/iv_signature_contrib_winstate" />
+
+            <ImageView
+                android:id="@+id/iv_signature_contrib_winstate"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/winstate2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
 </android.support.constraint.ConstraintLayout>
