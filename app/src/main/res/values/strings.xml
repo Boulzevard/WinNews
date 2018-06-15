@@ -1,8 +1,29 @@
 <resources>
     <string name="app_name">WinNews</string>
+    <string name="cancel">Annulé</string>
+    <string name="no_internet">Pas de connexion Internet</string>
+    <string name="error_unknown">Erreur inconnue</string>
+    <string name="error_auth_unknown">Erreur d\'authentification inconnue</string>
+    <string name="ecology">Ecologie</string>
+    <string name="social">Social</string>
+    <string name="economy">Economie</string>
+    <string name="technology">Technologie</string>
+    <string name="health">Santé</string>
+    <string name="event">Evénement</string>
+    <string name="enter_title">Merci de renseigner un titre</string>
+    <string name="enter_link">Merci d\'entrer un lien</string>
+    <string name="select_tag">Merci de sélectionner un tag</string>
+    <string name="video">video</string>
+    <string name="finish_load">Chargemement terminé</string>
+    <string name="loading">Chargement : %d%%</string>
+    <string name="km">%d km</string>
+    <string name="max_km">+500 km</string>
+    <string name="firstname_name">%s %s</string>
+    <string name="no_specified">Non Renseigné</string>
+    <string name="enter_name_firstname">Veuillez entrer un nom et un prénom</string>
 
     <string-array name="spinner_add_tags">
-        <item>Entrez un tag</item>
+        <item>Choisissez un tag</item>
         <item>Ecologie</item>
         <item>Social</item>
         <item>Economie</item>

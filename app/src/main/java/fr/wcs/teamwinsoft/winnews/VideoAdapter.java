@@ -1,14 +1,11 @@
 package fr.wcs.teamwinsoft.winnews;
 
 import android.content.Context;
-import android.net.UrlQuerySanitizer;
-
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import java.util.ArrayList;

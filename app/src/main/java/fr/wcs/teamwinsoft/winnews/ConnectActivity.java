@@ -1,8 +1,8 @@
 package fr.wcs.teamwinsoft.winnews;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
@@ -24,8 +24,6 @@ import java.util.Arrays;
 public class ConnectActivity extends AppCompatActivity {
 
     private final int REQUEST_LOGIN = 4000;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +48,11 @@ public class ConnectActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         if ((dataSnapshot.child("Profil").child("firstname").getValue() != null) &&
-                                (dataSnapshot.child("Profil").child("lastname").getValue() != null))  {
+                                (dataSnapshot.child("Profil").child("lastname").getValue() != null)) {
                             Intent ConnectIntent = new Intent(ConnectActivity.this, MainActivity.class);
                             startActivity(ConnectIntent);
                             finish();
-                        }
-                        else {
+                        } else {
                             Intent premConnectIntent = new Intent(ConnectActivity.this, ProfilActivity.class);
                             startActivity(premConnectIntent);
                             finish();
@@ -68,13 +65,12 @@ public class ConnectActivity extends AppCompatActivity {
                     }
                 });
             }
-        }
-        else {
+        } else {
             startActivityForResult(AuthUI.getInstance()
                     .createSignInIntentBuilder().setAvailableProviders(
                             Arrays.asList(
                                     new AuthUI.IdpConfig
-                                            .Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build())).build(),REQUEST_LOGIN);
+                                            .Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build())).build(), REQUEST_LOGIN);
         }
     }
 
@@ -92,27 +88,26 @@ public class ConnectActivity extends AppCompatActivity {
                     startActivity(connectIntent);
                     finish();
                     return;
-                }
-                else { //sign in failed
+                } else { //sign in failed
                     if (response == null) {
-                        Toast.makeText(this, "Annulé", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.cancel, Toast.LENGTH_SHORT).show();
                         return;
                     }
 
 
                     if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
-                        Toast.makeText(this, "Pas de connexion Internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                     if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                        Toast.makeText(this, "Erreur inconnue", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.error_unknown, Toast.LENGTH_SHORT).show();
                         return;
                     }
 
                 }
 
-                Toast.makeText(this, "Erreur d'authentification inconnue", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.error_auth_unknown, Toast.LENGTH_SHORT).show();
             }
         }
     }

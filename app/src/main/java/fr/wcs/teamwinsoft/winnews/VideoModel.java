@@ -7,35 +7,6 @@ public class VideoModel {
     public VideoModel() {
     }
 
-    public VideoModel(String title, String video) {
-        this.title = title;
-        this.video = video;
-    }
-
-    public VideoModel(String title, String link, String video) {
-        this.title = title;
-        this.link = link;
-        this.video = video;
-    }
-
-    public VideoModel(String title, String link, String video, String tags) {
-        this.title = title;
-        this.link = link;
-        this.video = video;
-        this.tags = tags;
-    }
-
-    public VideoModel(String title, String link, String video, String tags, String name, String firstname) {
-        this.title = title;
-        this.link = link;
-        this.video = video;
-        this.tags = tags;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.name = name;
-        this.firstname = firstname;
-    }
-
     public VideoModel(String title, String link, String video, String tags, double latitude, double longitude, String name, String firstname) {
         this.title = title;
         this.link = link;

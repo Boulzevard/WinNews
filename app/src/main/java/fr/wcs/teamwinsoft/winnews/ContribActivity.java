@@ -3,19 +3,17 @@ package fr.wcs.teamwinsoft.winnews;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,15 +42,13 @@ import java.util.Random;
 
 public class ContribActivity extends AppCompatActivity {
 
-    private boolean mPermission;
     private static final int RECORD_VIDEO = 1;
     private static final int PERMISSIONS_REQUEST = 2;
-
-    private Uri videoUri;
-    private String getVideoUrl = "";
-
     LocationManager mLocationManager = null;
     double mLatitude, mLongitude;
+    private boolean mPermission;
+    private Uri videoUri;
+    private String getVideoUrl = "";
     private FusedLocationProviderClient mFusedLocationClient;
 
     private String name = "";
@@ -65,12 +61,51 @@ public class ContribActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contrib);
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        initLocation();
+        Button newVideo = findViewById(R.id.new_video);
+        final EditText etVideoTitle = findViewById(R.id.video_title);
+        final EditText etLink = findViewById(R.id.link);
+        ImageView btnValidate = findViewById(R.id.iv_contrib_valid);
+        ImageView profil = findViewById(R.id.iv_toobar1);
+        ImageView lecture = findViewById(R.id.iv_toobar2);
+        ImageView contrib = findViewById(R.id.iv_toobar3);
+        Spinner spinnerAddTags = findViewById(R.id.spinner_add_tags);
+        TextView textcontrib = findViewById(R.id.tv_toolbar_contrib);
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         String uid = auth.getCurrentUser().getUid();
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_add_tags, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_drop_down);
+        spinnerAddTags.setAdapter(adapter);
+
+        contrib.setBackgroundColor(getResources().getColor(R.color.bleu));
+        textcontrib.setTextColor(getResources().getColor(R.color.jaune));
+
+        profil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ContribActivity.this, ProfilActivity.class));
+            }
+        });
+
+        lecture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ContribActivity.this, MainActivity.class));
+            }
+        });
+
+        contrib.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ContribActivity.this, ContribActivity.class));
+            }
+        });
+
+        // Récupère la dernière position connue
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        initLocation();
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("User").child(uid).child("Profil");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -80,10 +115,10 @@ public class ContribActivity extends AppCompatActivity {
                 name = userModel.getLastname();
                 firstname = userModel.getFirstname();
                 TextView tvIcon = findViewById(R.id.tv_toolbar_profil);
-                char lettre1 = firstname.charAt(0);
-                char lettre2 = name.charAt(0);
-                icon += lettre1;
-                icon += lettre2;
+                char letter1 = firstname.charAt(0);
+                char letter2 = name.charAt(0);
+                icon += letter1;
+                icon += letter2;
                 icon.toUpperCase();
                 tvIcon.setText(icon);
             }
@@ -93,17 +128,6 @@ public class ContribActivity extends AppCompatActivity {
 
             }
         });
-
-
-        Button newVideo = findViewById(R.id.new_video);
-        ImageView btnValidate = findViewById(R.id.iv_contrib_valid);
-        final EditText etVideoTitle = findViewById(R.id.video_title);
-        final EditText etLink = findViewById(R.id.link);
-
-        Spinner spinnerAddTags = findViewById(R.id.spinner_add_tags);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.spinner_add_tags, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_drop_down);
-        spinnerAddTags.setAdapter(adapter);
 
         newVideo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,22 +175,22 @@ public class ContribActivity extends AppCompatActivity {
                         tag = "";
                         break;
                     case 1:
-                        tag = "Ecologie";
+                        tag = getString(R.string.ecology);
                         break;
                     case 2:
-                        tag = "Social";
+                        tag = getString(R.string.social);
                         break;
                     case 3:
-                        tag = "Economie";
+                        tag = getString(R.string.economy);
                         break;
                     case 4:
-                        tag = "Technologie";
+                        tag = getString(R.string.technology);
                         break;
                     case 5:
-                        tag = "Santé";
+                        tag = getString(R.string.health);
                         break;
                     case 6:
-                        tag = "Evénement";
+                        tag = getString(R.string.event);
                         break;
                 }
             }
@@ -183,22 +207,18 @@ public class ContribActivity extends AppCompatActivity {
                 final String title = etVideoTitle.getText().toString();
                 final String link = etLink.getText().toString();
 
-                if (title.isEmpty() || link.isEmpty() || tag.equals("")){
+                if (title.isEmpty() || link.isEmpty() || tag.equals("")) {
                     if (title.isEmpty()) {
-                        Toast.makeText(ContribActivity.this, "Merci de renseigner un titre", Toast.LENGTH_SHORT).show();
-                    } else
-                    if (link.isEmpty()) {
-                        Toast.makeText(ContribActivity.this, "Merci d'entrer un lien", Toast.LENGTH_SHORT).show();
-                    } else
-                    if (tag.equals("")) {
-                        Toast.makeText(ContribActivity.this, "Merci de sélectionner un tag", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ContribActivity.this, R.string.enter_title, Toast.LENGTH_SHORT).show();
+                    } else if (link.isEmpty()) {
+                        Toast.makeText(ContribActivity.this, R.string.enter_link, Toast.LENGTH_SHORT).show();
+                    } else if (tag.equals("")) {
+                        Toast.makeText(ContribActivity.this, R.string.select_tag, Toast.LENGTH_SHORT).show();
                     }
-                }
-
-                else {
+                } else {
                     getVideoUrl = videoUri.getPath();
                     Random r = new Random();
-                    String numVideo = "video" + String.valueOf(r.nextInt(20) + 7);
+                    String numVideo = getString(R.string.video) + String.valueOf(r.nextInt(20) + 7);
 
                     if (!getVideoUrl.equals("") && getVideoUrl != null) {
                         StorageReference ref = FirebaseStorage.getInstance().getReference().child(numVideo);
@@ -210,16 +230,16 @@ public class ContribActivity extends AppCompatActivity {
                                 VideoModel videoModel = new VideoModel(title, link, video, tag, mLatitude, mLongitude, name, firstname);
                                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Videos");
                                 ref.push().setValue(videoModel);
-                                Toast.makeText(ContribActivity.this, "Chargemement terminé", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(ContribActivity.this, R.string.finish_load, Toast.LENGTH_SHORT).show();
                             }
                         })
-                        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                            @Override
-                            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                                int progress = (int) ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
-                                Toast.makeText(ContribActivity.this, "Chargement : " + progress + "%", Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                                        int progress = (int) ((100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount());
+                                        Toast.makeText(ContribActivity.this, String.format(getString(R.string.loading), progress), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                     }
 
                     etVideoTitle.getText().clear();
@@ -237,37 +257,6 @@ public class ContribActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.CAMERA},
                     PERMISSIONS_REQUEST);
         }
-
-
-        // Reglage intent toolbar
-        ImageView profil = findViewById(R.id.iv_toobar1);
-        ImageView lecture = findViewById(R.id.iv_toobar2);
-        ImageView contrib = findViewById(R.id.iv_toobar3);
-
-        contrib.setBackgroundColor(getResources().getColor(R.color.bleu));
-        TextView textcontrib = findViewById(R.id.tv_toolbar_contrib);
-        textcontrib.setTextColor(getResources().getColor(R.color.jaune));
-
-        profil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ContribActivity.this, ProfilActivity.class));
-            }
-        });
-
-        lecture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ContribActivity.this, MainActivity.class));
-            }
-        });
-
-        contrib.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ContribActivity.this, ContribActivity.class));
-            }
-        });
     }
 
     protected void onActivityResult(int request, int result, Intent intent) {
@@ -276,7 +265,7 @@ public class ContribActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint({"MissingPersmission", "MissingPermission"})
+    @SuppressLint("MissingPermission")
     private void initLocation() {
         mLocationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
@@ -329,7 +318,7 @@ public class ContribActivity extends AppCompatActivity {
 
             } else {
                 ActivityCompat.requestPermissions(ContribActivity.this,
-                        new String[] {Manifest.permission.ACCESS_FINE_LOCATION},
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         100);
             }
         } else {

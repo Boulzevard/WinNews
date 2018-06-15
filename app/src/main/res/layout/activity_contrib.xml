@@ -17,6 +17,26 @@
         android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_main">
 
+        <Button
+            android:id="@+id/new_video"
+            style="@style/textbasique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/button"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp"
+            android:text="Ajout vidéo"
+            android:textColor="@color/bleu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/video_title"
@@ -28,32 +48,11 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
             android:ems="10"
-            android:hint="Titre  de la vidéo"
+            android:hint="Titre de la vidéo"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/new_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="Ajout vidéo"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:textColor="@color/bleu"
-            style="@style/textbasique"
-            android:background="@drawable/button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/video_title" />
+            app:layout_constraintTop_toBottomOf="@+id/new_video" />
 
         <RelativeLayout
             android:id="@+id/relative_spinner"
@@ -92,7 +91,7 @@
             android:inputType="textWebEditText"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/new_video" />
+            app:layout_constraintTop_toBottomOf="@+id/video_title" />
 
         <LinearLayout
             android:layout_width="wrap_content"

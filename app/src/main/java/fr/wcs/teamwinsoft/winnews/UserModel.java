@@ -5,8 +5,8 @@ public class UserModel {
     private String lastname;
     private String societe;
 
-
-    public UserModel() {}
+    public UserModel() {
+    }
 
     public UserModel(String firstname, String lastname, String societe) {
         this.firstname = firstname;

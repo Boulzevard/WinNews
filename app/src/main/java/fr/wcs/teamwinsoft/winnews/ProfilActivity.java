@@ -1,17 +1,13 @@
 package fr.wcs.teamwinsoft.winnews;
 
 import android.content.Intent;
-import android.support.constraint.Constraints;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +32,10 @@ public class ProfilActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
+
+        ImageView profil = findViewById(R.id.iv_toobar1);
+        ImageView lecture = findViewById(R.id.iv_toobar2);
+        ImageView contrib = findViewById(R.id.iv_toobar3);
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance();
@@ -65,7 +65,7 @@ public class ProfilActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if ((dataSnapshot.child("Profil").child("firstname").getValue() != null) &&
-                        (dataSnapshot.child("Profil").child("lastname").getValue() != null))  {
+                        (dataSnapshot.child("Profil").child("lastname").getValue() != null)) {
 
                     String fireFirst = dataSnapshot.child("Profil").child("firstname").getValue().toString();
                     firstname.setText(fireFirst);
@@ -76,16 +76,15 @@ public class ProfilActivity extends AppCompatActivity {
 
                     String icon = "";
                     TextView tvIcon = findViewById(R.id.tv_toolbar_profil);
-                    char lettre1 = fireFirst.charAt(0);
-                    char lettre2 = fireLast.charAt(0);
-                    icon += lettre1;
-                    icon += lettre2;
+                    char letter1 = fireFirst.charAt(0);
+                    char letter2 = fireLast.charAt(0);
+                    icon += letter1;
+                    icon += letter2;
                     icon.toUpperCase();
                     tvIcon.setText(icon);
                     TextView logo = findViewById(R.id.tv_toolbar_profil);
                     logo.setTextColor(getResources().getColor(R.color.jaune));
                     logo.setBackgroundResource(R.drawable.iconprofil2);
-
 
                     // Firstname
                     firstname.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +118,6 @@ public class ProfilActivity extends AppCompatActivity {
                         }
                     });
 
-
                     // Lastname
                     lastname.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -152,7 +150,6 @@ public class ProfilActivity extends AppCompatActivity {
                         }
                     });
 
-
                     // Societe
                     societe.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -184,8 +181,7 @@ public class ProfilActivity extends AppCompatActivity {
                             ViewSocieteCheck.setVisibility(View.GONE);
                         }
                     });
-                }
-                else {
+                } else {
                     lastname.setVisibility(View.GONE);
                     etLastname.setVisibility(View.VISIBLE);
                     firstname.setVisibility(View.GONE);
@@ -213,27 +209,22 @@ public class ProfilActivity extends AppCompatActivity {
                             String writeSociete = etSociete.getText().toString();
 
                             if (writeSociete.isEmpty()) {
-                                writeSociete = "Non Renseigné";
+                                writeSociete = getString(R.string.no_specified);
                             }
 
                             UserModel userModel = new UserModel(writeFirstname, writeLastname, writeSociete);
 
                             if (writeFirstname.isEmpty() || writeLastname.isEmpty()) {
-                                Toast.makeText(ProfilActivity.this, "Veuillez entrer un nom et un prénom", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
+                                Toast.makeText(ProfilActivity.this, R.string.enter_name_firstname, Toast.LENGTH_SHORT).show();
+                            } else {
 
                                 mDatabaseReference.child(user.getUid()).child("Profil").setValue(userModel);
                                 Intent intent = new Intent(ProfilActivity.this, MainActivity.class);
                                 startActivity(intent);
                             }
-
                         }
                     });
-
-
                 }
-
             }
 
             @Override
@@ -241,8 +232,6 @@ public class ProfilActivity extends AppCompatActivity {
 
             }
         });
-
-
 
         //Deconnexion
         deconnexion.setOnClickListener(new View.OnClickListener() {
@@ -253,13 +242,6 @@ public class ProfilActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-        // Reglage intent toolbar
-        ImageView profil = findViewById(R.id.iv_toobar1);
-        ImageView lecture = findViewById(R.id.iv_toobar2);
-        ImageView contrib = findViewById(R.id.iv_toobar3);
 
         profil.setBackgroundColor(getResources().getColor(R.color.bleu));
 

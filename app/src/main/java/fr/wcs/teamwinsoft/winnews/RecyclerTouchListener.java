@@ -8,7 +8,6 @@ import android.view.View;
 
 public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
-
     private GestureDetector gestureDetector;
     private ClickListener clickListener;
 
@@ -54,6 +53,4 @@ public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
         void onLongClick(View view, int position);
     }
-
-
 }
