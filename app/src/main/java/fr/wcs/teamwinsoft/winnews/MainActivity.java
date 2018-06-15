@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView videoTitle, videoLink, videoAuthor;
 
+    String tag = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button details = findViewById(R.id.bt_main_video_detail);
         final ConstraintLayout containerDetails = findViewById(R.id.container_detail);
+        ImageView validTag = findViewById(R.id.iv_filtre_valid);
 
         details.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,25 +134,66 @@ public class MainActivity extends AppCompatActivity {
         listVideos.setLayoutManager(layoutManager);
         listVideos.setAdapter(videoAdapter);
 
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Videos");
-        ref.addValueEventListener(new ValueEventListener() {
+        spinnerAddTags.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                videoModels.clear();
-                for (DataSnapshot videoSnap: dataSnapshot.getChildren()) {
-                    VideoModel videoModel = videoSnap.getValue(VideoModel.class);
-                    videoModels.add(new VideoModel(videoModel.getTitle(), videoModel.getLink(),
-                            videoModel.getVideo(), videoModel.getTags(), videoModel.getName(),
-                            videoModel.getFirstname()));
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        Toast.makeText(MainActivity.this, "Merci de sélectionner un tag", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        tag = "Ecologie";
+                        break;
+                    case 2:
+                        tag = "Social";
+                        break;
+                    case 3:
+                        tag = "Economie";
+                        break;
+                    case 4:
+                        tag = "Technologie";
+                        break;
+                    case 5:
+                        tag = "Santé";
+                        break;
+                    case 6:
+                        tag = "Evénement";
+                        break;
                 }
-                videoAdapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
+
+        validTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Videos");
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        videoModels.clear();
+                        for (DataSnapshot videoSnap: dataSnapshot.getChildren()) {
+                            VideoModel videoModel = videoSnap.getValue(VideoModel.class);
+                            if (tag.equals(videoModel.getTags())) {
+                                videoModels.add(new VideoModel(videoModel.getTitle(), videoModel.getLink(),
+                                        videoModel.getVideo(), videoModel.getTags(), videoModel.getLatitude(),
+                                        videoModel.getLongitude(), videoModel.getName(), videoModel.getFirstname()));
+                            }
+                        }
+                        videoAdapter.notifyDataSetChanged();
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
 
         listVideos.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), listVideos, new RecyclerTouchListener.ClickListener() {
             @Override
