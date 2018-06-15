@@ -148,7 +148,7 @@ public class ContribActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (position) {
                     case 0:
-                        Toast.makeText(ContribActivity.this, "Merci de sélectionner un tag", Toast.LENGTH_SHORT).show();
+                        tag = "";
                         break;
                     case 1:
                         tag = "Ecologie";
@@ -183,12 +183,15 @@ public class ContribActivity extends AppCompatActivity {
                 final String title = etVideoTitle.getText().toString();
                 final String link = etLink.getText().toString();
 
-                if (title.isEmpty() || link.isEmpty()){
+                if (title.isEmpty() || link.isEmpty() || tag.equals("")){
                     if (title.isEmpty()) {
                         Toast.makeText(ContribActivity.this, "Merci de renseigner un titre", Toast.LENGTH_SHORT).show();
-                    }
+                    } else
                     if (link.isEmpty()) {
                         Toast.makeText(ContribActivity.this, "Merci d'entrer un lien", Toast.LENGTH_SHORT).show();
+                    } else
+                    if (tag.equals("")) {
+                        Toast.makeText(ContribActivity.this, "Merci de sélectionner un tag", Toast.LENGTH_SHORT).show();
                     }
                 }
 
