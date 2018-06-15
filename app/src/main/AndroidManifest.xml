@@ -22,16 +22,20 @@
         android:supportsRtl="true"
         android:theme="@style/noActionBar"
         android:icon="@mipmap/ic_launcher_logo">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ProfilActivity" />
-        <activity android:name=".ConnectActivity">
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ProfilActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ConnectActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ContribActivity" />
+        <activity android:name=".ContribActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"
