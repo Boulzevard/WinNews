@@ -197,7 +197,6 @@ public class MainActivity extends AppCompatActivity {
                             Location myLoc = new Location("");
                             myLoc.setLatitude(mLatitude);
                             myLoc.setLongitude(mLongitude);
-                            int test1 = (int) myLoc.distanceTo(loc) / 1000;
                             if (tag.equals(videoModel.getTags()) && ((int)myLoc.distanceTo(loc) / 1000) < distance) {
                                 videoModels.add(new VideoModel(videoModel.getTitle(), videoModel.getLink(),
                                         videoModel.getVideo(), videoModel.getTags(), videoModel.getLatitude(),
